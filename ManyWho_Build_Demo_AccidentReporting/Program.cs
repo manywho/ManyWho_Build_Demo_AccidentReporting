@@ -21,13 +21,13 @@ namespace ManyWho_Build_Demo_AccidentReporting
 {
     public class Program
     {
-        public const String MANYWHO_BASE_URL = "https://127.0.0.1";
+        public const String MANYWHO_BASE_URL = "https://flowtest.manywho.com";
 
-        public const String SERVICE_URL_SALESFORCE = "http://127.0.0.2:83/plugins/api/salesforce/1";
+        public const String SERVICE_URL_SALESFORCE = "https://salesforce.manywho.com/plugins/api/salesforce/1";
         public const String SERVICE_VALUE_AUTHENTICATION_URL_VALUE = "https://login.salesforce.com";
-        public const String SERVICE_VALUE_USERNAME_VALUE = "steve.wood@flow.demo";
-        public const String SERVICE_VALUE_PASSWORD_VALUE = "password1234";
-        public const String SERVICE_VALUE_SECURITY_TOKEN_VALUE = "fpyFfve4ZFIfpfA213P0P7Bk";
+        public const String SERVICE_VALUE_USERNAME_VALUE = "username";
+        public const String SERVICE_VALUE_PASSWORD_VALUE = "password";
+        public const String SERVICE_VALUE_SECURITY_TOKEN_VALUE = "securitytoken";
         public const String SERVICE_VALUE_CHATTER_BASE_URL_VALUE = "https://na15.salesforce.com";
         public const String SERVICE_VALUE_ADMIN_EMAIL_VALUE = "admin@manywho.com";
 
@@ -85,6 +85,18 @@ namespace ManyWho_Build_Demo_AccidentReporting
             SharedElementResponseAPI eventDescriptionSharedElementResponse = null;
             SharedElementResponseAPI eventWhenSharedElementResponse = null;
             SharedElementResponseAPI eventDurationSharedElementResponse = null;
+            SharedElementResponseAPI subjectSharedElementResponse = null;
+            SharedElementResponseAPI descriptionSharedElementResponse = null;
+            SharedElementResponseAPI optionsTriageSharedElementResponse = null;
+            SharedElementResponseAPI triageSharedElementResponse = null;
+            SharedElementResponseAPI incidentDescriptionSharedElementResponse = null;
+            SharedElementResponseAPI storeManagerSignatureSharedElementResponse = null;
+            SharedElementResponseAPI customerSignatureSharedElementResponse = null;
+            SharedElementResponseAPI confirmDocumentsSignedAttachedSharedElementResponse = null;
+            SharedElementResponseAPI weekReviewNotesSharedElementResponse = null;
+            SharedElementResponseAPI annualReviewNotesSharedElementResponse = null;
+            TypeElementResponseAPI dropDownTypeElementResponse = null;
+            ObjectAPI objectAPI = null;
 
             // User needs to be prompted to login so we can get the authenticated who
             authenticatedWho = Login();
@@ -175,19 +187,6 @@ namespace ManyWho_Build_Demo_AccidentReporting
                     // Check to make sure the input parameters passed validation
                     if (performBuild == true)
                     {
-                        SharedElementResponseAPI subjectSharedElementResponse = null;
-                        SharedElementResponseAPI descriptionSharedElementResponse = null;
-                        SharedElementResponseAPI optionsTriageSharedElementResponse = null;
-                        SharedElementResponseAPI triageSharedElementResponse = null;
-                        SharedElementResponseAPI incidentDescriptionSharedElementResponse = null;
-                        SharedElementResponseAPI storeManagerSignatureSharedElementResponse = null;
-                        SharedElementResponseAPI customerSignatureSharedElementResponse = null;
-                        SharedElementResponseAPI confirmDocumentsSignedAttachedSharedElementResponse = null;
-                        SharedElementResponseAPI weekReviewNotesSharedElementResponse = null;
-                        SharedElementResponseAPI annualReviewNotesSharedElementResponse = null;
-                        TypeElementResponseAPI dropDownTypeElementResponse = null;
-                        ObjectAPI objectAPI = null;
-
                         Console.WriteLine("Creating Shared Elements And Type");
 
                         typeElementRequest = Utils.CreateDropDownType("Drop Down");
@@ -215,7 +214,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
                         objectAPI.properties.Add(new PropertyAPI() { contentValue = "Incident", developerName = "Value", typeElementEntryId = Utils.GetTypeElementEntryIdForDeveloperName(dropDownTypeElementResponse, "Value") });
 
                         // Now serialize the object data as a string
-                        sharedElementRequest.defaultContentValue = ValueUtils.SerializeObjectData(objectAPI, dropDownTypeElementResponse);
+                        sharedElementRequest.defaultContentValue = ValueUtils.SerializeListData(new List<ObjectAPI>() { objectAPI }, dropDownTypeElementResponse);
                         sharedElementRequest.type = dropDownTypeElementResponse.id;
                         optionsTriageSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
                         DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", optionsTriageSharedElementResponse.id, "Program.Main", "admin@manywho.com");
@@ -845,6 +844,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
 
             pageContainer = new PageContainerAPI();
             pageContainer.containerType = ManyWhoConstants.CONTAINER_TYPE_VERTICAL_FLOW;
+            pageContainer.label = "Legal Request";
             pageContainer.developerName = "container";
 
             pageElementRequest.pageContainers.Add(pageContainer);
@@ -902,13 +902,14 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageElementRequest = new PageElementRequestAPI();
             pageElementRequest.developerName = developerName;
             pageElementRequest.elementType = ManyWhoConstants.UI_ELEMENT_TYPE_IMPLEMENTATION_PAGE_LAYOUT;
-            pageElementRequest.label = "Legal Request";
+            pageElementRequest.label = "Legal Request Triage";
             pageElementRequest.updateByName = true;
             pageElementRequest.pageContainers = new List<PageContainerAPI>();
             pageElementRequest.pageComponents = new List<PageComponentAPI>();
 
             pageContainer = new PageContainerAPI();
             pageContainer.containerType = ManyWhoConstants.CONTAINER_TYPE_VERTICAL_FLOW;
+            pageContainer.label = "Legal Request Triage";
             pageContainer.developerName = "container";
 
             pageElementRequest.pageContainers.Add(pageContainer);
@@ -989,6 +990,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
 
             pageContainer = new PageContainerAPI();
             pageContainer.containerType = ManyWhoConstants.CONTAINER_TYPE_VERTICAL_FLOW;
+            pageContainer.label = "Incident Information Form";
             pageContainer.developerName = "container";
 
             pageElementRequest.pageContainers.Add(pageContainer);
@@ -1050,6 +1052,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
+            pageComponent = new PageComponentAPI();
             pageComponent.componentType = ManyWhoConstants.COMPONENT_TYPE_TEXTBOX;
             pageComponent.developerName = "incident description";
             pageComponent.hintValue = "Incident Description";
@@ -1122,6 +1125,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
 
             pageContainer = new PageContainerAPI();
             pageContainer.containerType = ManyWhoConstants.CONTAINER_TYPE_VERTICAL_FLOW;
+            pageContainer.label = "Incident Review";
             pageContainer.developerName = "reviewcontainer";
             pageContainer.order = 2;
 
