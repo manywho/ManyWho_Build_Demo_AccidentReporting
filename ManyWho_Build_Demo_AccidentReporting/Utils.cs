@@ -13,7 +13,7 @@ using ManyWho.Flow.SDK.Draw.Elements.UI;
 using ManyWho.Flow.SDK.Draw.Elements.Map;
 using ManyWho.Flow.SDK.Draw.Elements.Type;
 using ManyWho.Flow.SDK.Draw.Elements.Group;
-using ManyWho.Flow.SDK.Draw.Elements.Shared;
+using ManyWho.Flow.SDK.Draw.Elements.Value;
 using ManyWho.Flow.SDK.Draw.Elements.Config;
 
 namespace ManyWho_Build_Demo_AccidentReporting
@@ -42,7 +42,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
 
             // Set the authorization object
             groupElementRequest.authorization = new GroupAuthorizationAPI();
-            groupElementRequest.authorization.streamBehaviour = ManyWhoConstants.GROUP_AUTHORIZATION_STREAM_BEHAVIOUR_USE_EXISTING;
+            groupElementRequest.authorization.streamBehaviourType = ManyWhoConstants.GROUP_AUTHORIZATION_STREAM_BEHAVIOUR_USE_EXISTING;
             groupElementRequest.authorization.globalAuthenticationType = ManyWhoConstants.GROUP_AUTHORIZATION_GLOBAL_AUTHENTICATION_TYPE_SPECIFIED;
             groupElementRequest.authorization.serviceElementId = serviceElementId;
             groupElementRequest.authorization.groups = new List<GroupAuthorizationGroupAPI>();
@@ -60,7 +60,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
             outcomeRequest.developerName = developerName;
             outcomeRequest.label = label;
             outcomeRequest.nextMapElementId = nextMapElementResponse.id;
-            outcomeRequest.pageActionBinding = ManyWhoConstants.ACTION_BINDING_SAVE;
+            outcomeRequest.pageActionBindingType = ManyWhoConstants.ACTION_BINDING_SAVE;
 
             // Map sure we have an outcomes list to user
             if (mapElementRequest.outcomes == null)
@@ -72,7 +72,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
             mapElementRequest.outcomes.Add(outcomeRequest);
         }
 
-        public static MapElementRequestAPI CreateInputElement(String developerName, String pageElementId, String groupElementId, String serviceElementId, SharedElementResponseAPI notificationSharedElementResponse, Int32 x, Int32 y)
+        public static MapElementRequestAPI CreateInputElement(String developerName, String pageElementId, String groupElementId, String serviceElementId, ValueElementResponseAPI notificationValueElementResponse, Int32 x, Int32 y)
         {
             MapElementRequestAPI mapElementRequest = null;
             MessageActionAPI messageAction = null;
@@ -105,7 +105,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
                 // Create the post input
                 messageInput = new MessageInputAPI();
                 messageInput.developerName = "Post";
-                messageInput.sharedElementContentValueToReference = new SharedElementIdAPI(notificationSharedElementResponse.id, null, null);
+                messageInput.valueElementToReferenceId = new ValueElementIdAPI(notificationValueElementResponse.id, null, null);
 
                 // Add the input to the action
                 messageAction.inputs.Add(messageInput);
@@ -168,20 +168,20 @@ namespace ManyWho_Build_Demo_AccidentReporting
         }
 
         /// <summary>
-        /// A utility method for quickly creating shared elements.
+        /// A utility method for quickly creating value elements.
         /// </summary>
-        public static SharedElementRequestAPI CreateSharedElement(String developerName, String contentType)
+        public static ValueElementResponseAPI CreateValueElement(String developerName, String contentType)
         {
-            SharedElementRequestAPI sharedElementRequest = null;
+            ValueElementResponseAPI valueElementRequest = null;
 
-            sharedElementRequest = new SharedElementRequestAPI();
-            sharedElementRequest.access = ManyWhoConstants.ACCESS_INPUT_OUTPUT;
-            sharedElementRequest.contentType = contentType;
-            sharedElementRequest.developerName = developerName;
-            sharedElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
-            sharedElementRequest.updateByName = true;
+            valueElementRequest = new ValueElementResponseAPI();
+            valueElementRequest.access = ManyWhoConstants.ACCESS_INPUT_OUTPUT;
+            valueElementRequest.contentType = contentType;
+            valueElementRequest.developerName = developerName;
+            valueElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
+            valueElementRequest.updateByName = true;
 
-            return sharedElementRequest;
+            return valueElementRequest;
         }
 
         public static TypeElementRequestAPI CreateDropDownType(String developerName)
@@ -192,9 +192,9 @@ namespace ManyWho_Build_Demo_AccidentReporting
             typeElementRequest.developerName = developerName;
             typeElementRequest.elementType = ManyWhoConstants.TYPE_ELEMENT_TYPE_IMPLEMENTATION_TYPE;
             typeElementRequest.updateByName = true;
-            typeElementRequest.typeElementEntries = new List<TypeElementEntryAPI>();
-            typeElementRequest.typeElementEntries.Add(new TypeElementEntryAPI() { contentType = ManyWhoConstants.CONTENT_TYPE_STRING, developerName = "Label" });
-            typeElementRequest.typeElementEntries.Add(new TypeElementEntryAPI() { contentType = ManyWhoConstants.CONTENT_TYPE_STRING, developerName = "Value" });
+            typeElementRequest.properties = new List<TypeElementPropertyAPI>();
+            typeElementRequest.properties.Add(new TypeElementPropertyAPI() { contentType = ManyWhoConstants.CONTENT_TYPE_STRING, developerName = "Label" });
+            typeElementRequest.properties.Add(new TypeElementPropertyAPI() { contentType = ManyWhoConstants.CONTENT_TYPE_STRING, developerName = "Value" });
 
             return typeElementRequest;
         }
@@ -204,11 +204,11 @@ namespace ManyWho_Build_Demo_AccidentReporting
             String typeElementEntryId = null;
 
             if (typeElementResponse != null &&
-                typeElementResponse.typeElementEntries != null &&
-                typeElementResponse.typeElementEntries.Count > 0)
+                typeElementResponse.properties != null &&
+                typeElementResponse.properties.Count > 0)
             {
                 // Go through each of the type element entries and match by developer name
-                foreach (TypeElementEntryAPI typeElementEntry in typeElementResponse.typeElementEntries)
+                foreach (TypeElementPropertyAPI typeElementEntry in typeElementResponse.properties)
                 {
                     // Check to see if this is the matching type element entry
                     if (typeElementEntry.developerName.Equals(developerName, StringComparison.InvariantCultureIgnoreCase) == true)

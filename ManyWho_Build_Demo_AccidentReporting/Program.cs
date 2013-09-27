@@ -14,7 +14,7 @@ using ManyWho.Flow.SDK.Draw.Elements.UI;
 using ManyWho.Flow.SDK.Draw.Elements.Map;
 using ManyWho.Flow.SDK.Draw.Elements.Type;
 using ManyWho.Flow.SDK.Draw.Elements.Group;
-using ManyWho.Flow.SDK.Draw.Elements.Shared;
+using ManyWho.Flow.SDK.Draw.Elements.Value;
 using ManyWho.Flow.SDK.Draw.Elements.Config;
 
 namespace ManyWho_Build_Demo_AccidentReporting
@@ -72,29 +72,29 @@ namespace ManyWho_Build_Demo_AccidentReporting
             GroupElementRequestAPI groupElementRequest = null;
             GroupElementResponseAPI storeManagerSwimlaneGroupElementResponse = null;
             GroupElementResponseAPI legalDepartmentSwimlaneGroupElementResponse = null;
-            SharedElementRequestAPI sharedElementRequest = null;
-            SharedElementResponseAPI legalSubmitIncidentSharedElementResponse = null;
-            SharedElementResponseAPI requestReportSharedElementResponse = null;
-            SharedElementResponseAPI legalReportApprovalSharedElementResponse = null;
-            SharedElementResponseAPI taskSubjectSharedElementResponse = null;
-            SharedElementResponseAPI taskDescriptionSharedElementResponse = null;
-            SharedElementResponseAPI taskWhenSharedElementResponse = null;
-            SharedElementResponseAPI taskPrioritySharedElementResponse = null;
-            SharedElementResponseAPI taskStatusSharedElementResponse = null;
-            SharedElementResponseAPI eventSubjectSharedElementResponse = null;
-            SharedElementResponseAPI eventDescriptionSharedElementResponse = null;
-            SharedElementResponseAPI eventWhenSharedElementResponse = null;
-            SharedElementResponseAPI eventDurationSharedElementResponse = null;
-            SharedElementResponseAPI subjectSharedElementResponse = null;
-            SharedElementResponseAPI descriptionSharedElementResponse = null;
-            SharedElementResponseAPI optionsTriageSharedElementResponse = null;
-            SharedElementResponseAPI triageSharedElementResponse = null;
-            SharedElementResponseAPI incidentDescriptionSharedElementResponse = null;
-            SharedElementResponseAPI storeManagerSignatureSharedElementResponse = null;
-            SharedElementResponseAPI customerSignatureSharedElementResponse = null;
-            SharedElementResponseAPI confirmDocumentsSignedAttachedSharedElementResponse = null;
-            SharedElementResponseAPI weekReviewNotesSharedElementResponse = null;
-            SharedElementResponseAPI annualReviewNotesSharedElementResponse = null;
+            ValueElementRequestAPI valueElementRequest = null;
+            ValueElementResponseAPI legalSubmitIncidentValueElementResponse = null;
+            ValueElementResponseAPI requestReportValueElementResponse = null;
+            ValueElementResponseAPI legalReportApprovalValueElementResponse = null;
+            ValueElementResponseAPI taskSubjectValueElementResponse = null;
+            ValueElementResponseAPI taskDescriptionValueElementResponse = null;
+            ValueElementResponseAPI taskWhenValueElementResponse = null;
+            ValueElementResponseAPI taskPriorityValueElementResponse = null;
+            ValueElementResponseAPI taskStatusValueElementResponse = null;
+            ValueElementResponseAPI eventSubjectValueElementResponse = null;
+            ValueElementResponseAPI eventDescriptionValueElementResponse = null;
+            ValueElementResponseAPI eventWhenValueElementResponse = null;
+            ValueElementResponseAPI eventDurationValueElementResponse = null;
+            ValueElementResponseAPI subjectValueElementResponse = null;
+            ValueElementResponseAPI descriptionValueElementResponse = null;
+            ValueElementResponseAPI optionsTriageValueElementResponse = null;
+            ValueElementResponseAPI triageValueElementResponse = null;
+            ValueElementResponseAPI incidentDescriptionValueElementResponse = null;
+            ValueElementResponseAPI storeManagerSignatureValueElementResponse = null;
+            ValueElementResponseAPI customerSignatureValueElementResponse = null;
+            ValueElementResponseAPI confirmDocumentsSignedAttachedValueElementResponse = null;
+            ValueElementResponseAPI weekReviewNotesValueElementResponse = null;
+            ValueElementResponseAPI annualReviewNotesValueElementResponse = null;
             TypeElementResponseAPI dropDownTypeElementResponse = null;
             ObjectAPI objectAPI = null;
 
@@ -114,7 +114,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
                     args[0] != null &&
                     args[0].Equals("create", StringComparison.InvariantCultureIgnoreCase) == true)
                 {
-                    // Create the salesforce service and dependent shared elements
+                    // Create the salesforce service and dependent value elements
                     serviceElementResponse = CreateSalesforceService(authenticatedWho);
 
                     // Create the new flow
@@ -124,7 +124,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
                     flowRequest.authorization = new GroupAuthorizationAPI();
                     flowRequest.authorization.globalAuthenticationType = ManyWhoConstants.GROUP_AUTHORIZATION_GLOBAL_AUTHENTICATION_TYPE_ALL_USERS;
                     flowRequest.authorization.serviceElementId = serviceElementResponse.id;
-                    flowRequest.authorization.streamBehaviour = ManyWhoConstants.GROUP_AUTHORIZATION_STREAM_BEHAVIOUR_CREATE_NEW;
+                    flowRequest.authorization.streamBehaviourType = ManyWhoConstants.GROUP_AUTHORIZATION_STREAM_BEHAVIOUR_CREATE_NEW;
 
                     // Save the flow and start the editing session
                     flowResponse = DrawSingleton.GetInstance().SaveFlow(authenticatedWho, MANYWHO_BASE_URL, flowRequest, "Program.Main", "admin@manywho.com");
@@ -187,63 +187,63 @@ namespace ManyWho_Build_Demo_AccidentReporting
                     // Check to make sure the input parameters passed validation
                     if (performBuild == true)
                     {
-                        Console.WriteLine("Creating Shared Elements And Type");
+                        Console.WriteLine("Creating Value Elements And Type");
 
                         typeElementRequest = Utils.CreateDropDownType("Drop Down");
                         dropDownTypeElementResponse = DrawSingleton.GetInstance().SaveTypeElement(authenticatedWho, MANYWHO_BASE_URL, typeElementRequest, "Program.Main", "admin@manywho.com");
                         DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "type", dropDownTypeElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Subject", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        subjectSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", subjectSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Subject", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        subjectValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", subjectValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Description", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        descriptionSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", descriptionSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Description", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        descriptionValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", descriptionValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Triage", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        triageSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", triageSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Triage", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        triageValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", triageValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Triage Options", ManyWhoConstants.CONTENT_TYPE_LIST);
+                        valueElementRequest = Utils.CreateValueElement("Triage Options", ManyWhoConstants.CONTENT_TYPE_LIST);
 
                         objectAPI = new ObjectAPI();
                         objectAPI.developerName = dropDownTypeElementResponse.developerName;
                         objectAPI.properties = new List<PropertyAPI>();
-                        objectAPI.properties.Add(new PropertyAPI() { contentValue = "Incident", developerName = "Label", typeElementEntryId = Utils.GetTypeElementEntryIdForDeveloperName(dropDownTypeElementResponse, "Label") });
-                        objectAPI.properties.Add(new PropertyAPI() { contentValue = "Incident", developerName = "Value", typeElementEntryId = Utils.GetTypeElementEntryIdForDeveloperName(dropDownTypeElementResponse, "Value") });
+                        objectAPI.properties.Add(new PropertyAPI() { contentValue = "Incident", developerName = "Label", typeElementPropertyId = Utils.GetTypeElementEntryIdForDeveloperName(dropDownTypeElementResponse, "Label") });
+                        objectAPI.properties.Add(new PropertyAPI() { contentValue = "Incident", developerName = "Value", typeElementPropertyId = Utils.GetTypeElementEntryIdForDeveloperName(dropDownTypeElementResponse, "Value") });
 
                         // Now serialize the object data as a string
-                        sharedElementRequest.defaultContentValue = ValueUtils.SerializeListData(new List<ObjectAPI>() { objectAPI }, dropDownTypeElementResponse);
-                        sharedElementRequest.type = dropDownTypeElementResponse.id;
-                        optionsTriageSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", optionsTriageSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest.defaultContentValue = ValueUtils.SerializeListData(new List<ObjectAPI>() { objectAPI }, dropDownTypeElementResponse);
+                        valueElementRequest.typeElementId = dropDownTypeElementResponse.id;
+                        optionsTriageValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", optionsTriageValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Incident Description", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        incidentDescriptionSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", incidentDescriptionSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Incident Description", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        incidentDescriptionValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", incidentDescriptionValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Store Manager Signature", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        storeManagerSignatureSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", storeManagerSignatureSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Store Manager Signature", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        storeManagerSignatureValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", storeManagerSignatureValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Customer Signature", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        customerSignatureSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", customerSignatureSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Customer Signature", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        customerSignatureValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", customerSignatureValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Confirm Documents Signed", ManyWhoConstants.CONTENT_TYPE_BOOLEAN);
-                        confirmDocumentsSignedAttachedSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", confirmDocumentsSignedAttachedSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Confirm Documents Signed", ManyWhoConstants.CONTENT_TYPE_BOOLEAN);
+                        confirmDocumentsSignedAttachedValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", confirmDocumentsSignedAttachedValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Weekly Review Notes", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        weekReviewNotesSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", weekReviewNotesSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Weekly Review Notes", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        weekReviewNotesValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", weekReviewNotesValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Annual Review Notes", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        annualReviewNotesSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", annualReviewNotesSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Annual Review Notes", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        annualReviewNotesValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", annualReviewNotesValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        Console.WriteLine("Creating Shared Elements And Type Done");
+                        Console.WriteLine("Creating Value Elements And Type Done");
                         Console.WriteLine("Creating Swimlane: Store Manager");
 
                         // Create the swimlane for store managers
@@ -261,7 +261,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
                         Console.WriteLine("Creating Page Layout: Legal Request");
 
                         // Create the page layout for the initial legal contact
-                        pageElementRequest = CreateLegalRequestPage("Legal Request", subjectSharedElementResponse, descriptionSharedElementResponse);
+                        pageElementRequest = CreateLegalRequestPage("Legal Request", subjectValueElementResponse, descriptionValueElementResponse);
                         contactLegalPageElementResponse = DrawSingleton.GetInstance().SavePageElement(authenticatedWho, MANYWHO_BASE_URL, pageElementRequest, "Program.Main", "admin@manywho.com");
                         DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "pagelayout", contactLegalPageElementResponse.id, "Program.Main", "admin@manywho.com");
 
@@ -276,7 +276,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
                         Console.WriteLine("Creating Page Layout: Create Incident");
 
                         // Create the page layout for legal to create an incident
-                        pageElementRequest = CreateLegalTriagePage("Triage Request", subjectSharedElementResponse, descriptionSharedElementResponse, dropDownTypeElementResponse, optionsTriageSharedElementResponse, triageSharedElementResponse);
+                        pageElementRequest = CreateLegalTriagePage("Triage Request", subjectValueElementResponse, descriptionValueElementResponse, dropDownTypeElementResponse, optionsTriageValueElementResponse, triageValueElementResponse);
                         legalSubmitIncidentPageElementResponse = DrawSingleton.GetInstance().SavePageElement(authenticatedWho, MANYWHO_BASE_URL, pageElementRequest, "Program.Main", "admin@manywho.com");
                         DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "pagelayout", legalSubmitIncidentPageElementResponse.id, "Program.Main", "admin@manywho.com");
 
@@ -284,23 +284,23 @@ namespace ManyWho_Build_Demo_AccidentReporting
                         Console.WriteLine("Creating Notification Message: Notify Create Incident");
 
                         // Create the notification message
-                        sharedElementRequest = Utils.CreateSharedElement("Notify Create Incident", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        sharedElementRequest.defaultContentValue = "You have a request for legal support waiting.";
-                        legalSubmitIncidentSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", legalSubmitIncidentSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Notify Create Incident", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        valueElementRequest.defaultContentValue = "You have a request for legal support waiting.";
+                        legalSubmitIncidentValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", legalSubmitIncidentValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
                         Console.WriteLine("Notification Message Completed");
                         Console.WriteLine("Creating Input: Create Incident");
 
                         // Create the input
-                        mapElementRequest = Utils.CreateInputElement("Create Incident", legalSubmitIncidentPageElementResponse.id, legalDepartmentSwimlaneGroupElementResponse.id, serviceElementId, legalSubmitIncidentSharedElementResponse, 75, 50);
+                        mapElementRequest = Utils.CreateInputElement("Create Incident", legalSubmitIncidentPageElementResponse.id, legalDepartmentSwimlaneGroupElementResponse.id, serviceElementId, legalSubmitIncidentValueElementResponse, 75, 50);
                         legalSubmitIncidentMapElementResponse = DrawSingleton.GetInstance().SaveMapElement(authenticatedWho, MANYWHO_BASE_URL, editingToken, flowId, mapElementRequest, "Program.Main", "admin@manywho.com");
 
                         Console.WriteLine("Input Completed");
                         Console.WriteLine("Creating Page Layout: Incident Report");
 
                         // Create the page layout for legal requesting the incident report
-                        pageElementRequest = CreateIncidentAndApprovalDetailsPage("Incident Report", subjectSharedElementResponse, descriptionSharedElementResponse, incidentDescriptionSharedElementResponse, storeManagerSignatureSharedElementResponse, customerSignatureSharedElementResponse, confirmDocumentsSignedAttachedSharedElementResponse, true);
+                        pageElementRequest = CreateIncidentAndApprovalDetailsPage("Incident Report", subjectValueElementResponse, descriptionValueElementResponse, incidentDescriptionValueElementResponse, storeManagerSignatureValueElementResponse, customerSignatureValueElementResponse, confirmDocumentsSignedAttachedValueElementResponse, true);
                         requestReportPageElementResponse = DrawSingleton.GetInstance().SavePageElement(authenticatedWho, MANYWHO_BASE_URL, pageElementRequest, "Program.Main", "admin@manywho.com");
                         DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "pagelayout", requestReportPageElementResponse.id, "Program.Main", "admin@manywho.com");
 
@@ -308,23 +308,23 @@ namespace ManyWho_Build_Demo_AccidentReporting
                         Console.WriteLine("Creating Notification Message: Notify Incident Report");
 
                         // Create the notification message
-                        sharedElementRequest = Utils.CreateSharedElement("Notify Incident Report", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        sharedElementRequest.defaultContentValue = "A report needs to be completed based on your request to the legal department.";
-                        requestReportSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", requestReportSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Notify Incident Report", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        valueElementRequest.defaultContentValue = "A report needs to be completed based on your request to the legal department.";
+                        requestReportValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", requestReportValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
                         Console.WriteLine("Notification Message Completed");
                         Console.WriteLine("Creating Input: Incident Report");
 
                         // Create the input
-                        mapElementRequest = Utils.CreateInputElement("Incident Report", requestReportPageElementResponse.id, storeManagerSwimlaneGroupElementResponse.id, serviceElementId, requestReportSharedElementResponse, 275, 50);
+                        mapElementRequest = Utils.CreateInputElement("Incident Report", requestReportPageElementResponse.id, storeManagerSwimlaneGroupElementResponse.id, serviceElementId, requestReportValueElementResponse, 275, 50);
                         requestReportMapElementResponse = DrawSingleton.GetInstance().SaveMapElement(authenticatedWho, MANYWHO_BASE_URL, editingToken, flowId, mapElementRequest, "Program.Main", "admin@manywho.com");
 
                         Console.WriteLine("Input Completed");
                         Console.WriteLine("Creating Page Layout: Approve Incident Report");
 
                         // Create the page layout for legal to approve the incident report
-                        pageElementRequest = CreateIncidentAndApprovalDetailsPage("Approve Incident Report", subjectSharedElementResponse, descriptionSharedElementResponse, incidentDescriptionSharedElementResponse, storeManagerSignatureSharedElementResponse, customerSignatureSharedElementResponse, confirmDocumentsSignedAttachedSharedElementResponse, false);
+                        pageElementRequest = CreateIncidentAndApprovalDetailsPage("Approve Incident Report", subjectValueElementResponse, descriptionValueElementResponse, incidentDescriptionValueElementResponse, storeManagerSignatureValueElementResponse, customerSignatureValueElementResponse, confirmDocumentsSignedAttachedValueElementResponse, false);
                         legalReportApprovalPageElementResponse = DrawSingleton.GetInstance().SavePageElement(authenticatedWho, MANYWHO_BASE_URL, pageElementRequest, "Program.Main", "admin@manywho.com");
                         DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "pagelayout", legalReportApprovalPageElementResponse.id, "Program.Main", "admin@manywho.com");
 
@@ -332,69 +332,69 @@ namespace ManyWho_Build_Demo_AccidentReporting
                         Console.WriteLine("Creating Notification Message: Notify Approve Incident Report");
 
                         // Create the notification message
-                        sharedElementRequest = Utils.CreateSharedElement("Notify Approve Incident Report", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        sharedElementRequest.defaultContentValue = "A report needs your approval.";
-                        legalReportApprovalSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", legalReportApprovalSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Notify Approve Incident Report", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        valueElementRequest.defaultContentValue = "A report needs your approval.";
+                        legalReportApprovalValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", legalReportApprovalValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
                         Console.WriteLine("Notification Message Completed");
                         Console.WriteLine("Creating Input: Approve Incident Report");
 
                         // Create the input
-                        mapElementRequest = Utils.CreateInputElement("Approve Incident Report", legalReportApprovalPageElementResponse.id, legalDepartmentSwimlaneGroupElementResponse.id, serviceElementId, legalReportApprovalSharedElementResponse, 275, 50);
+                        mapElementRequest = Utils.CreateInputElement("Approve Incident Report", legalReportApprovalPageElementResponse.id, legalDepartmentSwimlaneGroupElementResponse.id, serviceElementId, legalReportApprovalValueElementResponse, 275, 50);
                         legalReportApprovalMapElementResponse = DrawSingleton.GetInstance().SaveMapElement(authenticatedWho, MANYWHO_BASE_URL, editingToken, flowId, mapElementRequest, "Program.Main", "admin@manywho.com");
 
                         Console.WriteLine("Input Completed");
-                        Console.WriteLine("Creating Shared Elements: Create Calendar Items");
+                        Console.WriteLine("Creating Value Elements: Create Calendar Items");
 
                         // Create the values for the events
-                        sharedElementRequest = Utils.CreateSharedElement("Review Task Subject", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        sharedElementRequest.defaultContentValue = "Week 2 Incident Review";
-                        taskSubjectSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", taskSubjectSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Review Task Subject", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        valueElementRequest.defaultContentValue = "Week 2 Incident Review";
+                        taskSubjectValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", taskSubjectValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Review Task Description", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        sharedElementRequest.defaultContentValue = "The incident needs to be reviewed. Please follow the link to the flow.";
-                        taskDescriptionSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", taskDescriptionSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Review Task Description", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        valueElementRequest.defaultContentValue = "The incident needs to be reviewed. Please follow the link to the flow.";
+                        taskDescriptionValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", taskDescriptionValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Review Task When", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        sharedElementRequest.defaultContentValue = "14 days";
-                        taskWhenSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", taskWhenSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Review Task When", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        valueElementRequest.defaultContentValue = "14 days";
+                        taskWhenValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", taskWhenValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Review Task Priority", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        sharedElementRequest.defaultContentValue = "Normal";
-                        taskPrioritySharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", taskPrioritySharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Review Task Priority", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        valueElementRequest.defaultContentValue = "Normal";
+                        taskPriorityValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", taskPriorityValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Review Task Status", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        sharedElementRequest.defaultContentValue = "Not Started";
-                        taskStatusSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", taskStatusSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Review Task Status", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        valueElementRequest.defaultContentValue = "Not Started";
+                        taskStatusValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", taskStatusValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Review Event Subject", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        sharedElementRequest.defaultContentValue = "1 Year Incident Review";
-                        eventSubjectSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", eventSubjectSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Review Event Subject", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        valueElementRequest.defaultContentValue = "1 Year Incident Review";
+                        eventSubjectValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", eventSubjectValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Review Event Description", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        sharedElementRequest.defaultContentValue = "The incident needs to be reviewed. Please follow the link to the flow.";
-                        eventDescriptionSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", eventDescriptionSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Review Event Description", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        valueElementRequest.defaultContentValue = "The incident needs to be reviewed. Please follow the link to the flow.";
+                        eventDescriptionValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", eventDescriptionValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Review Event When", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        sharedElementRequest.defaultContentValue = "365 days";
-                        eventWhenSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", eventWhenSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Review Event When", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        valueElementRequest.defaultContentValue = "365 days";
+                        eventWhenValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", eventWhenValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        sharedElementRequest = Utils.CreateSharedElement("Review Event Duration", ManyWhoConstants.CONTENT_TYPE_STRING);
-                        sharedElementRequest.defaultContentValue = "60";
-                        sharedElementRequest.contentType = ManyWhoConstants.CONTENT_TYPE_NUMBER;
-                        eventDurationSharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.Main", "admin@manywho.com");
-                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", eventDurationSharedElementResponse.id, "Program.Main", "admin@manywho.com");
+                        valueElementRequest = Utils.CreateValueElement("Review Event Duration", ManyWhoConstants.CONTENT_TYPE_STRING);
+                        valueElementRequest.defaultContentValue = "60";
+                        valueElementRequest.contentType = ManyWhoConstants.CONTENT_TYPE_NUMBER;
+                        eventDurationValueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.Main", "admin@manywho.com");
+                        DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "value", eventDurationValueElementResponse.id, "Program.Main", "admin@manywho.com");
 
-                        Console.WriteLine("Creating Shared Elements Done");
+                        Console.WriteLine("Creating Value Elements Done");
                         Console.WriteLine("Creating Message: Create Calendar Items");
 
                         // Create the message
@@ -406,11 +406,11 @@ namespace ManyWho_Build_Demo_AccidentReporting
                         messageAction.serviceElementId = serviceElementId;
                         messageAction.uriPart = "createtask";
                         messageAction.inputs = new List<MessageInputAPI>();
-                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Subject", sharedElementContentValueToReference = new SharedElementIdAPI() { id = taskSubjectSharedElementResponse.id } });
-                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Description", sharedElementContentValueToReference = new SharedElementIdAPI() { id = taskDescriptionSharedElementResponse.id } });
-                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "When", sharedElementContentValueToReference = new SharedElementIdAPI() { id = taskWhenSharedElementResponse.id } });
-                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Status", sharedElementContentValueToReference = new SharedElementIdAPI() { id = taskStatusSharedElementResponse.id } });
-                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Priority", sharedElementContentValueToReference = new SharedElementIdAPI() { id = taskPrioritySharedElementResponse.id } });
+                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Subject", valueElementToReferenceId = new ValueElementIdAPI() { id = taskSubjectValueElementResponse.id } });
+                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Description", valueElementToReferenceId = new ValueElementIdAPI() { id = taskDescriptionValueElementResponse.id } });
+                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "When", valueElementToReferenceId = new ValueElementIdAPI() { id = taskWhenValueElementResponse.id } });
+                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Status", valueElementToReferenceId = new ValueElementIdAPI() { id = taskStatusValueElementResponse.id } });
+                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Priority", valueElementToReferenceId = new ValueElementIdAPI() { id = taskPriorityValueElementResponse.id } });
 
                         mapElementRequest.messageActions.Add(messageAction);
 
@@ -419,10 +419,10 @@ namespace ManyWho_Build_Demo_AccidentReporting
                         messageAction.serviceElementId = serviceElementId;
                         messageAction.uriPart = "createevent";
                         messageAction.inputs = new List<MessageInputAPI>();
-                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Subject", sharedElementContentValueToReference = new SharedElementIdAPI() { id = eventSubjectSharedElementResponse.id } });
-                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Description", sharedElementContentValueToReference = new SharedElementIdAPI() { id = eventDescriptionSharedElementResponse.id } });
-                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "When", sharedElementContentValueToReference = new SharedElementIdAPI() { id = eventWhenSharedElementResponse.id } });
-                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Duration", sharedElementContentValueToReference = new SharedElementIdAPI() { id = eventDurationSharedElementResponse.id } });
+                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Subject", valueElementToReferenceId = new ValueElementIdAPI() { id = eventSubjectValueElementResponse.id } });
+                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Description", valueElementToReferenceId = new ValueElementIdAPI() { id = eventDescriptionValueElementResponse.id } });
+                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "When", valueElementToReferenceId = new ValueElementIdAPI() { id = eventWhenValueElementResponse.id } });
+                        messageAction.inputs.Add(new MessageInputAPI() { developerName = "Duration", valueElementToReferenceId = new ValueElementIdAPI() { id = eventDurationValueElementResponse.id } });
 
                         mapElementRequest.messageActions.Add(messageAction);
 
@@ -448,7 +448,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
                         Console.WriteLine("Creating Page Layout: 2 Week Report Review");
 
                         // Create the page layout for the 2 week review
-                        pageElementRequest = CreateIncident2WeekReviewDetailsPage("2 Week Report Review", subjectSharedElementResponse, descriptionSharedElementResponse, incidentDescriptionSharedElementResponse, storeManagerSignatureSharedElementResponse, customerSignatureSharedElementResponse, confirmDocumentsSignedAttachedSharedElementResponse, weekReviewNotesSharedElementResponse, true);
+                        pageElementRequest = CreateIncident2WeekReviewDetailsPage("2 Week Report Review", subjectValueElementResponse, descriptionValueElementResponse, incidentDescriptionValueElementResponse, storeManagerSignatureValueElementResponse, customerSignatureValueElementResponse, confirmDocumentsSignedAttachedValueElementResponse, weekReviewNotesValueElementResponse, true);
                         reportReview2WeekPageElementResponse = DrawSingleton.GetInstance().SavePageElement(authenticatedWho, MANYWHO_BASE_URL, pageElementRequest, "Program.Main", "admin@manywho.com");
                         DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "pagelayout", reportReview2WeekPageElementResponse.id, "Program.Main", "admin@manywho.com");
 
@@ -478,7 +478,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
                         Console.WriteLine("Creating Page Layout: 1 Year Report Review");
 
                         // Create the page layout for the 1 year review
-                        pageElementRequest = CreateIncidentAnnualReviewDetailsPage("1 Year Report Review", subjectSharedElementResponse, descriptionSharedElementResponse, incidentDescriptionSharedElementResponse, storeManagerSignatureSharedElementResponse, customerSignatureSharedElementResponse, confirmDocumentsSignedAttachedSharedElementResponse, weekReviewNotesSharedElementResponse, annualReviewNotesSharedElementResponse);
+                        pageElementRequest = CreateIncidentAnnualReviewDetailsPage("1 Year Report Review", subjectValueElementResponse, descriptionValueElementResponse, incidentDescriptionValueElementResponse, storeManagerSignatureValueElementResponse, customerSignatureValueElementResponse, confirmDocumentsSignedAttachedValueElementResponse, weekReviewNotesValueElementResponse, annualReviewNotesValueElementResponse);
                         reportReview1YearPageElementResponse = DrawSingleton.GetInstance().SavePageElement(authenticatedWho, MANYWHO_BASE_URL, pageElementRequest, "Program.Main", "admin@manywho.com");
                         DrawSingleton.GetInstance().AddElementToFlow(authenticatedWho, MANYWHO_BASE_URL, flowId, "pagelayout", reportReview1YearPageElementResponse.id, "Program.Main", "admin@manywho.com");
 
@@ -586,8 +586,8 @@ namespace ManyWho_Build_Demo_AccidentReporting
         {
             ServiceElementRequestAPI serviceElementRequest = null;
             ServiceElementResponseAPI serviceElementResponse = null;
-            SharedElementResponseAPI sharedElementResponse = null;
-            SharedElementRequestAPI sharedElementRequest = null;
+            ValueElementResponseAPI valueElementResponse = null;
+            ValueElementRequestAPI valueElementRequest = null;
             DescribeServiceResponseAPI describeServiceResponse = null;
             DescribeServiceRequestAPI describeServiceRequest = null;
             ServiceValueRequestAPI serviceValueRequest = null;
@@ -614,130 +614,130 @@ namespace ManyWho_Build_Demo_AccidentReporting
             serviceElementRequest.elementType = ManyWhoConstants.SERVICE_ELEMENT_TYPE_IMPLEMENTATION_SERVICE;
             serviceElementRequest.format = "json";
             serviceElementRequest.id = null;
-            serviceElementRequest.exposesTables = describeServiceResponse.exposesTables;
-            serviceElementRequest.exposesLogic = describeServiceResponse.exposesLogic;
-            serviceElementRequest.exposesViews = describeServiceResponse.exposesViews;
+            serviceElementRequest.providesDatabase = describeServiceResponse.providesDatabase;
+            serviceElementRequest.providesLogic = describeServiceResponse.providesLogic;
+            serviceElementRequest.providesViews = describeServiceResponse.providesViews;
             serviceElementRequest.providesIdentity = describeServiceResponse.providesIdentity;
             serviceElementRequest.providesSocial = describeServiceResponse.providesSocial;
             serviceElementRequest.uri = describeServiceRequest.uri;
 
             serviceElementRequest.configurationValues = new List<ServiceValueRequestAPI>();
 
-            // Create the shared element for the authentication url
-            sharedElementRequest = Utils.CreateSharedElement(SERVICE_VALUE_AUTHENTICATION_URL, ManyWhoConstants.CONTENT_TYPE_STRING);
-            sharedElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
-            sharedElementRequest.developerSummary = "The Url to use when logging into salesforce.com";
-            sharedElementRequest.access = ManyWhoConstants.ACCESS_PRIVATE;
-            sharedElementRequest.isFixed = true;
-            sharedElementRequest.defaultContentValue = SERVICE_VALUE_AUTHENTICATION_URL_VALUE;
+            // Create the value element for the authentication url
+            valueElementRequest = Utils.CreateValueElement(SERVICE_VALUE_AUTHENTICATION_URL, ManyWhoConstants.CONTENT_TYPE_STRING);
+            valueElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
+            valueElementRequest.developerSummary = "The Url to use when logging into salesforce.com";
+            valueElementRequest.access = ManyWhoConstants.ACCESS_PRIVATE;
+            valueElementRequest.isFixed = true;
+            valueElementRequest.defaultContentValue = SERVICE_VALUE_AUTHENTICATION_URL_VALUE;
 
-            // Save the shared element back to the service
-            sharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.CreateSalesforceService", "admin@manywho.com");
+            // Save the value element back to the service
+            valueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.CreateSalesforceService", "admin@manywho.com");
 
-            // Map the shared element to the service configuration
+            // Map the value element to the service configuration
             serviceValueRequest = new ServiceValueRequestAPI();
             serviceValueRequest.developerName = SERVICE_VALUE_AUTHENTICATION_URL;
-            serviceValueRequest.sharedElementContentValueToReference = new SharedElementIdAPI(sharedElementResponse.id, null, null);
+            serviceValueRequest.valueElementToReferenceId = new ValueElementIdAPI(valueElementResponse.id, null, null);
             serviceValueRequest.contentType = ManyWhoConstants.CONTENT_TYPE_STRING;
 
             // Add the service value request to the service configuration
             serviceElementRequest.configurationValues.Add(serviceValueRequest);
 
-            // Create the shared element for the chatter base url
-            sharedElementRequest = Utils.CreateSharedElement(SERVICE_VALUE_CHATTER_BASE_URL, ManyWhoConstants.CONTENT_TYPE_STRING);
-            sharedElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
-            sharedElementRequest.developerSummary = "The Url to use as the base location for chatter.";
-            sharedElementRequest.access = ManyWhoConstants.ACCESS_PRIVATE;
-            sharedElementRequest.isFixed = true;
-            sharedElementRequest.defaultContentValue = SERVICE_VALUE_CHATTER_BASE_URL_VALUE;
+            // Create the value element for the chatter base url
+            valueElementRequest = Utils.CreateValueElement(SERVICE_VALUE_CHATTER_BASE_URL, ManyWhoConstants.CONTENT_TYPE_STRING);
+            valueElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
+            valueElementRequest.developerSummary = "The Url to use as the base location for chatter.";
+            valueElementRequest.access = ManyWhoConstants.ACCESS_PRIVATE;
+            valueElementRequest.isFixed = true;
+            valueElementRequest.defaultContentValue = SERVICE_VALUE_CHATTER_BASE_URL_VALUE;
 
-            // Save the shared element back to the service
-            sharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.CreateSalesforceService", "admin@manywho.com");
+            // Save the value element back to the service
+            valueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.CreateSalesforceService", "admin@manywho.com");
 
-            // Map the shared element to the service configuration
+            // Map the value element to the service configuration
             serviceValueRequest = new ServiceValueRequestAPI();
             serviceValueRequest.developerName = SERVICE_VALUE_CHATTER_BASE_URL;
-            serviceValueRequest.sharedElementContentValueToReference = new SharedElementIdAPI(sharedElementResponse.id, null, null);
+            serviceValueRequest.valueElementToReferenceId = new ValueElementIdAPI(valueElementResponse.id, null, null);
             serviceValueRequest.contentType = ManyWhoConstants.CONTENT_TYPE_STRING;
 
             // Add the service value request to the service configuration
             serviceElementRequest.configurationValues.Add(serviceValueRequest);
 
-            // Create the shared element for the salesforce username
-            sharedElementRequest = Utils.CreateSharedElement(SERVICE_VALUE_USERNAME, ManyWhoConstants.CONTENT_TYPE_STRING);
-            sharedElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
-            sharedElementRequest.developerSummary = "The username to login to salesforce.com.";
-            sharedElementRequest.access = ManyWhoConstants.ACCESS_PRIVATE;
-            sharedElementRequest.isFixed = true;
-            sharedElementRequest.defaultContentValue = SERVICE_VALUE_USERNAME_VALUE;
+            // Create the value element for the salesforce username
+            valueElementRequest = Utils.CreateValueElement(SERVICE_VALUE_USERNAME, ManyWhoConstants.CONTENT_TYPE_STRING);
+            valueElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
+            valueElementRequest.developerSummary = "The username to login to salesforce.com.";
+            valueElementRequest.access = ManyWhoConstants.ACCESS_PRIVATE;
+            valueElementRequest.isFixed = true;
+            valueElementRequest.defaultContentValue = SERVICE_VALUE_USERNAME_VALUE;
 
-            // Save the shared element back to the service
-            sharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.CreateSalesforceService", "admin@manywho.com");
+            // Save the value element back to the service
+            valueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.CreateSalesforceService", "admin@manywho.com");
 
-            // Map the shared element to the service configuration
+            // Map the value element to the service configuration
             serviceValueRequest = new ServiceValueRequestAPI();
             serviceValueRequest.developerName = SERVICE_VALUE_USERNAME;
-            serviceValueRequest.sharedElementContentValueToReference = new SharedElementIdAPI(sharedElementResponse.id, null, null);
+            serviceValueRequest.valueElementToReferenceId = new ValueElementIdAPI(valueElementResponse.id, null, null);
             serviceValueRequest.contentType = ManyWhoConstants.CONTENT_TYPE_STRING;
 
             // Add the service value request to the service configuration
             serviceElementRequest.configurationValues.Add(serviceValueRequest);
 
-            // Create the shared element for the salesforce password
-            sharedElementRequest = Utils.CreateSharedElement(SERVICE_VALUE_PASSWORD, ManyWhoConstants.CONTENT_TYPE_STRING);
-            sharedElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
-            sharedElementRequest.developerSummary = "The password to login to salesforce.com.";
-            sharedElementRequest.access = ManyWhoConstants.ACCESS_PRIVATE;
-            sharedElementRequest.isFixed = true;
-            sharedElementRequest.defaultContentValue = SERVICE_VALUE_PASSWORD_VALUE;
+            // Create the value element for the salesforce password
+            valueElementRequest = Utils.CreateValueElement(SERVICE_VALUE_PASSWORD, ManyWhoConstants.CONTENT_TYPE_STRING);
+            valueElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
+            valueElementRequest.developerSummary = "The password to login to salesforce.com.";
+            valueElementRequest.access = ManyWhoConstants.ACCESS_PRIVATE;
+            valueElementRequest.isFixed = true;
+            valueElementRequest.defaultContentValue = SERVICE_VALUE_PASSWORD_VALUE;
 
-            // Save the shared element back to the service
-            sharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.CreateSalesforceService", "admin@manywho.com");
+            // Save the value element back to the service
+            valueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.CreateSalesforceService", "admin@manywho.com");
 
-            // Map the shared element to the service configuration
+            // Map the value element to the service configuration
             serviceValueRequest = new ServiceValueRequestAPI();
             serviceValueRequest.developerName = SERVICE_VALUE_PASSWORD;
-            serviceValueRequest.sharedElementContentValueToReference = new SharedElementIdAPI(sharedElementResponse.id, null, null);
+            serviceValueRequest.valueElementToReferenceId = new ValueElementIdAPI(valueElementResponse.id, null, null);
             serviceValueRequest.contentType = ManyWhoConstants.CONTENT_TYPE_STRING;
 
             // Add the service value request to the service configuration
             serviceElementRequest.configurationValues.Add(serviceValueRequest);
 
-            // Create the shared element for the salesforce security token
-            sharedElementRequest = Utils.CreateSharedElement(SERVICE_VALUE_SECURITY_TOKEN, ManyWhoConstants.CONTENT_TYPE_STRING);
-            sharedElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
-            sharedElementRequest.developerSummary = "The security token to login to salesforce.com.";
-            sharedElementRequest.access = ManyWhoConstants.ACCESS_PRIVATE;
-            sharedElementRequest.isFixed = true;
-            sharedElementRequest.defaultContentValue = SERVICE_VALUE_SECURITY_TOKEN_VALUE;
+            // Create the value element for the salesforce security token
+            valueElementRequest = Utils.CreateValueElement(SERVICE_VALUE_SECURITY_TOKEN, ManyWhoConstants.CONTENT_TYPE_STRING);
+            valueElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
+            valueElementRequest.developerSummary = "The security token to login to salesforce.com.";
+            valueElementRequest.access = ManyWhoConstants.ACCESS_PRIVATE;
+            valueElementRequest.isFixed = true;
+            valueElementRequest.defaultContentValue = SERVICE_VALUE_SECURITY_TOKEN_VALUE;
 
-            // Save the shared element back to the service
-            sharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.CreateSalesforceService", "admin@manywho.com");
+            // Save the value element back to the service
+            valueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.CreateSalesforceService", "admin@manywho.com");
 
-            // Map the shared element to the service configuration
+            // Map the value element to the service configuration
             serviceValueRequest = new ServiceValueRequestAPI();
             serviceValueRequest.developerName = SERVICE_VALUE_SECURITY_TOKEN;
-            serviceValueRequest.sharedElementContentValueToReference = new SharedElementIdAPI(sharedElementResponse.id, null, null);
+            serviceValueRequest.valueElementToReferenceId = new ValueElementIdAPI(valueElementResponse.id, null, null);
             serviceValueRequest.contentType = ManyWhoConstants.CONTENT_TYPE_STRING;
 
             // Add the service value request to the service configuration
             serviceElementRequest.configurationValues.Add(serviceValueRequest);
 
-            // Create the shared element for the admin email
-            sharedElementRequest = Utils.CreateSharedElement(SERVICE_VALUE_ADMIN_EMAIL, ManyWhoConstants.CONTENT_TYPE_STRING);
-            sharedElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
-            sharedElementRequest.developerSummary = "The admin email for errors in salesforce.com.";
-            sharedElementRequest.access = ManyWhoConstants.ACCESS_PRIVATE;
-            sharedElementRequest.isFixed = true;
-            sharedElementRequest.defaultContentValue = SERVICE_VALUE_ADMIN_EMAIL_VALUE;
+            // Create the value element for the admin email
+            valueElementRequest = Utils.CreateValueElement(SERVICE_VALUE_ADMIN_EMAIL, ManyWhoConstants.CONTENT_TYPE_STRING);
+            valueElementRequest.elementType = ManyWhoConstants.SHARED_ELEMENT_TYPE_IMPLEMENTATION_VARIABLE;
+            valueElementRequest.developerSummary = "The admin email for errors in salesforce.com.";
+            valueElementRequest.access = ManyWhoConstants.ACCESS_PRIVATE;
+            valueElementRequest.isFixed = true;
+            valueElementRequest.defaultContentValue = SERVICE_VALUE_ADMIN_EMAIL_VALUE;
 
-            // Save the shared element back to the service
-            sharedElementResponse = DrawSingleton.GetInstance().SaveSharedElement(authenticatedWho, MANYWHO_BASE_URL, sharedElementRequest, "Program.CreateSalesforceService", "admin@manywho.com");
+            // Save the value element back to the service
+            valueElementResponse = DrawSingleton.GetInstance().SaveValueElement(authenticatedWho, MANYWHO_BASE_URL, valueElementRequest, "Program.CreateSalesforceService", "admin@manywho.com");
 
-            // Map the shared element to the service configuration
+            // Map the value element to the service configuration
             serviceValueRequest = new ServiceValueRequestAPI();
             serviceValueRequest.developerName = SERVICE_VALUE_ADMIN_EMAIL;
-            serviceValueRequest.sharedElementContentValueToReference = new SharedElementIdAPI(sharedElementResponse.id, null, null);
+            serviceValueRequest.valueElementToReferenceId = new ValueElementIdAPI(valueElementResponse.id, null, null);
             serviceValueRequest.contentType = ManyWhoConstants.CONTENT_TYPE_STRING;
 
             // Add the service value request to the service configuration
@@ -785,7 +785,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
                             serviceValueRequest = new ServiceValueRequestAPI();
                             serviceValueRequest.contentValue = serviceInput.contentValue;
                             serviceValueRequest.developerName = serviceInput.developerName;
-                            serviceValueRequest.sharedElementContentValueToReference = null;
+                            serviceValueRequest.valueElementToReferenceId = null;
                             serviceValueRequest.contentType = serviceInput.contentType;
 
                             serviceActionRequest.serviceInputs.Add(serviceValueRequest);
@@ -802,7 +802,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
                             serviceValueRequest = new ServiceValueRequestAPI();
                             serviceValueRequest.contentValue = serviceOutput.contentValue;
                             serviceValueRequest.developerName = serviceOutput.developerName;
-                            serviceValueRequest.sharedElementContentValueToReference = null;
+                            serviceValueRequest.valueElementToReferenceId = null;
                             serviceValueRequest.contentType = serviceOutput.contentType;
 
                             serviceActionRequest.serviceOutputs.Add(serviceValueRequest);
@@ -816,7 +816,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
             if (describeServiceResponse.install != null)
             {
                 serviceElementRequest.install = new ServiceInstallRequestAPI();
-                serviceElementRequest.install.types = describeServiceResponse.install.types;
+                serviceElementRequest.install.typeElements = describeServiceResponse.install.typeElements;
             }
 
             // Tell the service that we want to update if this name exists
@@ -828,7 +828,7 @@ namespace ManyWho_Build_Demo_AccidentReporting
             return serviceElementResponse;
         }
 
-        private static PageElementRequestAPI CreateLegalRequestPage(String developerName, SharedElementResponseAPI subjectSharedElementResponse, SharedElementResponseAPI descriptionSharedElementResponse)
+        private static PageElementRequestAPI CreateLegalRequestPage(String developerName, ValueElementResponseAPI subjectValueElementResponse, ValueElementResponseAPI descriptionValueElementResponse)
         {
             PageElementRequestAPI pageElementRequest = null;
             PageComponentAPI pageComponent = null;
@@ -867,9 +867,9 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageComponent.maxSize = 255;
             pageComponent.order = 1;
             pageComponent.pageContainerDeveloperName = "container";
-            pageComponent.required = true;
+            pageComponent.isRequired = true;
             pageComponent.size = 75;
-            pageComponent.valueBindingSharedElement = new SharedElementIdAPI(subjectSharedElementResponse.id, null, null);
+            pageComponent.valueElementValueBindingReferenceId = new ValueElementIdAPI(subjectValueElementResponse.id, null, null);
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
@@ -885,15 +885,15 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageComponent.maxSize = 2000;
             pageComponent.order = 2;
             pageComponent.pageContainerDeveloperName = "container";
-            pageComponent.required = true;
-            pageComponent.valueBindingSharedElement = new SharedElementIdAPI(descriptionSharedElementResponse.id, null, null);
+            pageComponent.isRequired = true;
+            pageComponent.valueElementValueBindingReferenceId = new ValueElementIdAPI(descriptionValueElementResponse.id, null, null);
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
             return pageElementRequest;
         }
 
-        private static PageElementRequestAPI CreateLegalTriagePage(String developerName, SharedElementResponseAPI subjectSharedElementResponse, SharedElementResponseAPI descriptionSharedElementResponse, TypeElementResponseAPI dropDownTypeElementResponse, SharedElementResponseAPI optionsTriageSharedElementResponse, SharedElementResponseAPI triageSharedElementResponse)
+        private static PageElementRequestAPI CreateLegalTriagePage(String developerName, ValueElementResponseAPI subjectValueElementResponse, ValueElementResponseAPI descriptionValueElementResponse, TypeElementResponseAPI dropDownTypeElementResponse, ValueElementResponseAPI optionsTriageValueElementResponse, ValueElementResponseAPI triageValueElementResponse)
         {
             PageElementRequestAPI pageElementRequest = null;
             PageComponentAPI pageComponent = null;
@@ -930,12 +930,12 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageComponent.label = "Triage";
             pageComponent.order = 1;
             pageComponent.pageContainerDeveloperName = "container";
-            pageComponent.required = true;
-            pageComponent.valueBindingSharedElement = new SharedElementIdAPI(triageSharedElementResponse.id, null, null);
-            pageComponent.dataSharedElement = new SharedElementIdAPI(optionsTriageSharedElementResponse.id, null, null);
+            pageComponent.isRequired = true;
+            pageComponent.valueElementValueBindingReferenceId = new ValueElementIdAPI(triageValueElementResponse.id, null, null);
+            pageComponent.valueElementDataBindingReferenceId = new ValueElementIdAPI(optionsTriageValueElementResponse.id, null, null);
             pageComponent.columns = new List<PageComponentColumnAPI>();
-            pageComponent.columns.Add(new PageComponentColumnAPI() { isBound = true, isDisplayValue = false, typeElementEntryId = Utils.GetTypeElementEntryIdForDeveloperName(dropDownTypeElementResponse, "Value") });
-            pageComponent.columns.Add(new PageComponentColumnAPI() { isBound = false, isDisplayValue = true, typeElementEntryId = Utils.GetTypeElementEntryIdForDeveloperName(dropDownTypeElementResponse, "Label") });
+            pageComponent.columns.Add(new PageComponentColumnAPI() { isBound = true, isDisplayValue = false, typeElementPropertyId = Utils.GetTypeElementEntryIdForDeveloperName(dropDownTypeElementResponse, "Value") });
+            pageComponent.columns.Add(new PageComponentColumnAPI() { isBound = false, isDisplayValue = true, typeElementPropertyId = Utils.GetTypeElementEntryIdForDeveloperName(dropDownTypeElementResponse, "Label") });
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
@@ -948,9 +948,9 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageComponent.maxSize = 255;
             pageComponent.order = 2;
             pageComponent.pageContainerDeveloperName = "container";
-            pageComponent.required = true;
+            pageComponent.isRequired = true;
             pageComponent.size = 75;
-            pageComponent.valueBindingSharedElement = new SharedElementIdAPI(subjectSharedElementResponse.id, null, null);
+            pageComponent.valueElementValueBindingReferenceId = new ValueElementIdAPI(subjectValueElementResponse.id, null, null);
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
@@ -966,15 +966,15 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageComponent.maxSize = 2000;
             pageComponent.order = 3;
             pageComponent.pageContainerDeveloperName = "container";
-            pageComponent.required = true;
-            pageComponent.valueBindingSharedElement = new SharedElementIdAPI(descriptionSharedElementResponse.id, null, null);
+            pageComponent.isRequired = true;
+            pageComponent.valueElementValueBindingReferenceId = new ValueElementIdAPI(descriptionValueElementResponse.id, null, null);
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
             return pageElementRequest;
         }
 
-        private static PageElementRequestAPI CreateIncidentAndApprovalDetailsPage(String developerName, SharedElementResponseAPI subjectSharedElementResponse, SharedElementResponseAPI descriptionSharedElementResponse, SharedElementResponseAPI incidentDescriptionSharedElementResponse, SharedElementResponseAPI storeManagerSignatureSharedElementResponse, SharedElementResponseAPI customerSignatureSharedElementResponse, SharedElementResponseAPI confirmDocumentsSignedAttachedSharedElementResponse, Boolean editable)
+        private static PageElementRequestAPI CreateIncidentAndApprovalDetailsPage(String developerName, ValueElementResponseAPI subjectValueElementResponse, ValueElementResponseAPI descriptionValueElementResponse, ValueElementResponseAPI incidentDescriptionValueElementResponse, ValueElementResponseAPI storeManagerSignatureValueElementResponse, ValueElementResponseAPI customerSignatureValueElementResponse, ValueElementResponseAPI confirmDocumentsSignedAttachedValueElementResponse, Boolean editable)
         {
             PageElementRequestAPI pageElementRequest = null;
             PageComponentAPI pageComponent = null;
@@ -1020,9 +1020,9 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageComponent.maxSize = 255;
             pageComponent.order = 1;
             pageComponent.pageContainerDeveloperName = "container";
-            pageComponent.required = true;
+            pageComponent.isRequired = true;
             pageComponent.size = 75;
-            pageComponent.valueBindingSharedElement = new SharedElementIdAPI(subjectSharedElementResponse.id, null, null);
+            pageComponent.valueElementValueBindingReferenceId = new ValueElementIdAPI(subjectValueElementResponse.id, null, null);
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
@@ -1038,8 +1038,8 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageComponent.maxSize = 2000;
             pageComponent.order = 2;
             pageComponent.pageContainerDeveloperName = "container";
-            pageComponent.required = true;
-            pageComponent.valueBindingSharedElement = new SharedElementIdAPI(descriptionSharedElementResponse.id, null, null);
+            pageComponent.isRequired = true;
+            pageComponent.valueElementValueBindingReferenceId = new ValueElementIdAPI(descriptionValueElementResponse.id, null, null);
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
@@ -1063,8 +1063,8 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageComponent.maxSize = 2000;
             pageComponent.order = 4;
             pageComponent.pageContainerDeveloperName = "container";
-            pageComponent.required = true;
-            pageComponent.valueBindingSharedElement = new SharedElementIdAPI(incidentDescriptionSharedElementResponse.id, null, null);
+            pageComponent.isRequired = true;
+            pageComponent.valueElementValueBindingReferenceId = new ValueElementIdAPI(incidentDescriptionValueElementResponse.id, null, null);
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
@@ -1075,8 +1075,8 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageComponent.label = "Confirm Signatures Scanned/Attached";
             pageComponent.order = 5;
             pageComponent.pageContainerDeveloperName = "container";
-            pageComponent.required = true;
-            pageComponent.valueBindingSharedElement = new SharedElementIdAPI(confirmDocumentsSignedAttachedSharedElementResponse.id, null, null);
+            pageComponent.isRequired = true;
+            pageComponent.valueElementValueBindingReferenceId = new ValueElementIdAPI(confirmDocumentsSignedAttachedValueElementResponse.id, null, null);
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
@@ -1089,9 +1089,9 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageComponent.maxSize = 255;
             pageComponent.order = 1;
             pageComponent.pageContainerDeveloperName = "signaturescontainer";
-            pageComponent.required = true;
+            pageComponent.isRequired = true;
             pageComponent.size = 25;
-            pageComponent.valueBindingSharedElement = new SharedElementIdAPI(storeManagerSignatureSharedElementResponse.id, null, null);
+            pageComponent.valueElementValueBindingReferenceId = new ValueElementIdAPI(storeManagerSignatureValueElementResponse.id, null, null);
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
@@ -1104,22 +1104,22 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageComponent.maxSize = 255;
             pageComponent.order = 1;
             pageComponent.pageContainerDeveloperName = "signaturescontainer";
-            pageComponent.required = true;
+            pageComponent.isRequired = true;
             pageComponent.size = 25;
-            pageComponent.valueBindingSharedElement = new SharedElementIdAPI(customerSignatureSharedElementResponse.id, null, null);
+            pageComponent.valueElementValueBindingReferenceId = new ValueElementIdAPI(customerSignatureValueElementResponse.id, null, null);
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
             return pageElementRequest;
         }
 
-        private static PageElementRequestAPI CreateIncident2WeekReviewDetailsPage(String developerName, SharedElementResponseAPI subjectSharedElementResponse, SharedElementResponseAPI descriptionSharedElementResponse, SharedElementResponseAPI incidentDescriptionSharedElementResponse, SharedElementResponseAPI storeManagerSignatureSharedElementResponse, SharedElementResponseAPI customerSignatureSharedElementResponse, SharedElementResponseAPI confirmDocumentsSignedAttachedSharedElementResponse, SharedElementResponseAPI weekReviewNotesSharedElementResponse, Boolean editable)
+        private static PageElementRequestAPI CreateIncident2WeekReviewDetailsPage(String developerName, ValueElementResponseAPI subjectValueElementResponse, ValueElementResponseAPI descriptionValueElementResponse, ValueElementResponseAPI incidentDescriptionValueElementResponse, ValueElementResponseAPI storeManagerSignatureValueElementResponse, ValueElementResponseAPI customerSignatureValueElementResponse, ValueElementResponseAPI confirmDocumentsSignedAttachedValueElementResponse, ValueElementResponseAPI weekReviewNotesValueElementResponse, Boolean editable)
         {
             PageElementRequestAPI pageElementRequest = null;
             PageComponentAPI pageComponent = null;
             PageContainerAPI pageContainer = null;
 
-            pageElementRequest = CreateIncidentAndApprovalDetailsPage(developerName, subjectSharedElementResponse, descriptionSharedElementResponse, incidentDescriptionSharedElementResponse, storeManagerSignatureSharedElementResponse, customerSignatureSharedElementResponse, confirmDocumentsSignedAttachedSharedElementResponse, false);
+            pageElementRequest = CreateIncidentAndApprovalDetailsPage(developerName, subjectValueElementResponse, descriptionValueElementResponse, incidentDescriptionValueElementResponse, storeManagerSignatureValueElementResponse, customerSignatureValueElementResponse, confirmDocumentsSignedAttachedValueElementResponse, false);
 
             pageElementRequest.label = "Incident: 2 Week Review";
 
@@ -1142,20 +1142,20 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageComponent.maxSize = 2000;
             pageComponent.order = 4;
             pageComponent.pageContainerDeveloperName = "reviewcontainer";
-            pageComponent.required = true;
-            pageComponent.valueBindingSharedElement = new SharedElementIdAPI(weekReviewNotesSharedElementResponse.id, null, null);
+            pageComponent.isRequired = true;
+            pageComponent.valueElementValueBindingReferenceId = new ValueElementIdAPI(weekReviewNotesValueElementResponse.id, null, null);
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
             return pageElementRequest;
         }
 
-        private static PageElementRequestAPI CreateIncidentAnnualReviewDetailsPage(String developerName, SharedElementResponseAPI subjectSharedElementResponse, SharedElementResponseAPI descriptionSharedElementResponse, SharedElementResponseAPI incidentDescriptionSharedElementResponse, SharedElementResponseAPI storeManagerSignatureSharedElementResponse, SharedElementResponseAPI customerSignatureSharedElementResponse, SharedElementResponseAPI confirmDocumentsSignedAttachedSharedElementResponse, SharedElementResponseAPI weekReviewNotesSharedElementResponse, SharedElementResponseAPI annualReviewNotesSharedElementResponse)
+        private static PageElementRequestAPI CreateIncidentAnnualReviewDetailsPage(String developerName, ValueElementResponseAPI subjectValueElementResponse, ValueElementResponseAPI descriptionValueElementResponse, ValueElementResponseAPI incidentDescriptionValueElementResponse, ValueElementResponseAPI storeManagerSignatureValueElementResponse, ValueElementResponseAPI customerSignatureValueElementResponse, ValueElementResponseAPI confirmDocumentsSignedAttachedValueElementResponse, ValueElementResponseAPI weekReviewNotesValueElementResponse, ValueElementResponseAPI annualReviewNotesValueElementResponse)
         {
             PageElementRequestAPI pageElementRequest = null;
             PageComponentAPI pageComponent = null;
 
-            pageElementRequest = CreateIncident2WeekReviewDetailsPage(developerName, subjectSharedElementResponse, descriptionSharedElementResponse, incidentDescriptionSharedElementResponse, storeManagerSignatureSharedElementResponse, customerSignatureSharedElementResponse, confirmDocumentsSignedAttachedSharedElementResponse, weekReviewNotesSharedElementResponse, false);
+            pageElementRequest = CreateIncident2WeekReviewDetailsPage(developerName, subjectValueElementResponse, descriptionValueElementResponse, incidentDescriptionValueElementResponse, storeManagerSignatureValueElementResponse, customerSignatureValueElementResponse, confirmDocumentsSignedAttachedValueElementResponse, weekReviewNotesValueElementResponse, false);
 
             pageElementRequest.label = "Incident: Annual Review";
 
@@ -1170,8 +1170,8 @@ namespace ManyWho_Build_Demo_AccidentReporting
             pageComponent.maxSize = 2000;
             pageComponent.order = 4;
             pageComponent.pageContainerDeveloperName = "reviewcontainer";
-            pageComponent.required = true;
-            pageComponent.valueBindingSharedElement = new SharedElementIdAPI(annualReviewNotesSharedElementResponse.id, null, null);
+            pageComponent.isRequired = true;
+            pageComponent.valueElementValueBindingReferenceId = new ValueElementIdAPI(annualReviewNotesValueElementResponse.id, null, null);
 
             pageElementRequest.pageComponents.Add(pageComponent);
 
